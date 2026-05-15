@@ -1,0 +1,122 @@
+/* Container to center everything */
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.home-card {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Heart Icon Styling */
+.heart-icon-wrapper {
+  margin-bottom: 20px;
+}
+
+.heart-icon {
+  font-size: 80px;
+}
+
+/* Typography */
+.home-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.home-title .highlight {
+  color: #c084fc;
+}
+
+.home-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* Form Styles */
+.home-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  position: relative;
+  text-align: left;
+}
+
+/* Label that sits on the border */
+.input-label {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background: white;
+  padding: 0 5px;
+  font-size: 12px;
+  color: #888;
+  z-index: 1;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  padding: 12px 15px;
+  transition: border-color 0.3s;
+}
+
+.input-wrapper:focus-within {
+  border-color: #c084fc;
+}
+
+.field-icon {
+  color: #444;
+  font-size: 18px;
+  margin-right: 12px;
+}
+
+.input-wrapper input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Button Styling */
+.start-btn {
+  background-color: #c084fc;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 30px; /* Fully rounded like the image */
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  box-shadow: 0 4px 6px -1px rgba(192, 132, 252, 0.2);
+}
+
+.start-btn:hover {
+  background-color: #a855f7; /* Slightly darker/richer purple on hover */
+  transform: translateY(-2px); /* Lifts the button up */
+  box-shadow: 0 10px 15px -3px rgba(192, 132, 252, 0.4); /* Stronger shadow on hover */
+}
+
+.start-btn:active {
+  transform: translateY(0); /* Returns to normal when clicked */
+  background-color: #9333ea;
+}
