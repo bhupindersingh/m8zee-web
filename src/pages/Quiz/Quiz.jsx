@@ -4,17 +4,17 @@ import { db } from '../../config/firebase'
 import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore'
 import { PropagateLoader } from "react-spinners"
 import ArrowLeftLineIcon from '@rsuite/icons/ArrowLeftLine'
-import { CheckIcon } from '../../assets/icons/CheckIcon' // Updated path
-import { HeartIcon } from '../../assets/icons/HeartIcon' // Updated path
-import { calculateResults } from '../../utils/scoring' // Updated path
+import { CheckIcon } from '../../assets/icons/CheckIcon'
+import { HeartIcon } from '../../assets/icons/HeartIcon'
+import { calculateResults } from '../../utils/scoring'
 import Certificate from '../Certificate/Certificate'
-import PreparingCertificate from '../../components/PreparingCertificate' // Updated path
-import '../../App.css' // Updated path
+import PreparingCertificate from '../../components/PreparingCertificate'
+import '../../App.css'
 
 function Quiz() {
   const location = useLocation()
   const navigate = useNavigate()
-  
+
   // Get user info from navigation state
   const { userName, userEmail, inviteId, userId } = location.state || {}
 
@@ -60,6 +60,14 @@ function Quiz() {
     }
     fetchQuizData()
   }, [])
+
+  // Auto-scroll to top when moving to next/previous question
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }, [currentIndex])
 
   const handleOptionClick = (score) => {
     if (!data) return
@@ -130,26 +138,28 @@ function Quiz() {
 
   return (
     <div className="quiz-wrapper">
-      <div className="top-nav">
-        {currentIndex > 0 ? (
-          <button
-            className="back-btn"
-            onClick={() => setCurrentIndex(currentIndex - 1)}
-          >
-            <ArrowLeftLineIcon />
-          </button>
-        ) : (
-          <div /> // Placeholder to keep the grid column balance
-        )}
-        <div className="nav-title">Rate Yourself</div>
-        <div className="nav-count">{currentIndex + 1}/9</div>
-      </div>
+      <div className="sticky-header">
+        <div className="top-nav">
+          {currentIndex > 0 ? (
+            <button
+              className="back-btn"
+              onClick={() => setCurrentIndex(currentIndex - 1)}
+            >
+              <ArrowLeftLineIcon />
+            </button>
+          ) : (
+            <div /> // Placeholder to keep the grid column balance
+          )}
+          <div className="nav-title">Rate Yourself</div>
+          <div className="nav-count">{currentIndex + 1}/9</div>
+        </div>
 
-      <div className="progress-bar-container">
-        <div
-          className="progress-bar-fill"
-          style={{ width: `${progressWidth}%` }}
-        ></div>
+        <div className="progress-bar-container">
+          <div
+            className="progress-bar-fill"
+            style={{ width: `${progressWidth}%` }}
+          ></div>
+        </div>
       </div>
 
       <div className="content">
