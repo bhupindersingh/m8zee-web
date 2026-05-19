@@ -150,8 +150,10 @@ body {
   color: #4B5563;
 }
 
-.option-card:hover {
-  border-color: var(--primary);
+@media (hover: hover) {
+  .option-card:hover {
+    border-color: var(--primary);
+  }
 }
 
 .option-card.active {
