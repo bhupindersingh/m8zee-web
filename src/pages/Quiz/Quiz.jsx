@@ -171,7 +171,7 @@ function Quiz() {
           “{currentQ.question}”
         </h2>
 
-        <div className="options-stack">
+        <div className="options-stack" key={currentIndex}>
           {currentQ.answers.map((ans) => (
             <div
               key={ans.score}
