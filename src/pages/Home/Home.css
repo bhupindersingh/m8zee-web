@@ -120,3 +120,38 @@
   transform: translateY(0); /* Returns to normal when clicked */
   background-color: #9333ea;
 }
+
+.home-footer {
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 10px 0;
+  border-top: 1px solid #f3e8ff;
+}
+
+.footer-link {
+  font-size: 12px;
+  color: #7c3aed;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  opacity: 0.75;
+}
+
+.footer-link:hover {
+  opacity: 1;
+  color: #a855f7;
+  text-decoration: underline;
+  transform: translateY(-0.5px);
+}
+
+.footer-separator {
+  color: #cbd5e1;
+  font-size: 12px;
+  user-select: none;
+}
+
+
