@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
 import './DeleteAccount.css';
 
 const DeleteAccount = () => {
@@ -26,10 +25,6 @@ const DeleteAccount = () => {
     <div className="delete-account-container">
       {/* Navigation Header */}
       <header className="delete-account-header">
-        <button className="back-home-btn" onClick={() => navigate('/')} aria-label="Go back to Home">
-          <FaArrowLeft className="back-icon" />
-          <span>Back to Home</span>
-        </button>
         <span className="brand-logo">M8ZEE</span>
       </header>
 
