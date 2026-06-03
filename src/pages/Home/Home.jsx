@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaHeart } from 'react-icons/fa';
 import { db } from '../../config/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -124,6 +124,17 @@ const Home = () => {
             {loading ? "Checking..." : "Start Quiz"}
           </button>
         </form>
+
+        {/* Footer Links */}
+        <div className="home-footer">
+          <Link to="/terms-and-conditions" className="footer-link">Terms &amp; Conditions</Link>
+          <span className="footer-separator">•</span>
+          <Link to="/privacy-policy" className="footer-link">Privacy Policy</Link>
+          <span className="footer-separator">•</span>
+          <Link to="/cookie-policy" className="footer-link">Cookie Policy</Link>
+          <span className="footer-separator">•</span>
+          <Link to="/anonymous-feedback" className="footer-link">Anonymous Feedback Policy</Link>
+        </div>
       </div>
     </div>
   );
