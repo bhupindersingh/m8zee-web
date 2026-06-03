@@ -5,6 +5,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import TermsConditions from './pages/TermsConditions/TermsConditions'
 import CookiePolicy from './pages/CookiePolicy/CookiePolicy'
 import AnonymousFeedback from './pages/AnonymousFeedback/AnonymousFeedback'
+import DeleteAccount from './pages/DeleteAccount/DeleteAccount'
 
 function App() {
   return (
@@ -27,9 +28,13 @@ function App() {
 
         {/* Anonymous Feedback Policy Page */}
         <Route path="/anonymous-feedback" element={<AnonymousFeedback />} />
+
+        {/* Delete Account & Data Page */}
+        <Route path="/delete-account" element={<DeleteAccount />} />
       </Routes>
     </BrowserRouter>
   )
 }
 
 export default App
+
