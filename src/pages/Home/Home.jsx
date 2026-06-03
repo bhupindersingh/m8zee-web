@@ -134,6 +134,8 @@ const Home = () => {
           <Link to="/cookie-policy" className="footer-link">Cookie Policy</Link>
           <span className="footer-separator">•</span>
           <Link to="/anonymous-feedback" className="footer-link">Anonymous Feedback Policy</Link>
+          <span className="footer-separator">•</span>
+          <Link to="/child-safety-standards" className="footer-link">Child Safety Standards</Link>
         </div>
       </div>
     </div>

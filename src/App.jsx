@@ -6,6 +6,7 @@ import TermsConditions from './pages/TermsConditions/TermsConditions'
 import CookiePolicy from './pages/CookiePolicy/CookiePolicy'
 import AnonymousFeedback from './pages/AnonymousFeedback/AnonymousFeedback'
 import DeleteAccount from './pages/DeleteAccount/DeleteAccount'
+import ChildSafetyStandards from './pages/ChildSafetyStandards/ChildSafetyStandards'
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
 
         {/* Delete Account & Data Page */}
         <Route path="/delete-account" element={<DeleteAccount />} />
+
+        {/* Child Safety Standards Page */}
+        <Route path="/child-safety-standards" element={<ChildSafetyStandards />} />
       </Routes>
     </BrowserRouter>
   )
