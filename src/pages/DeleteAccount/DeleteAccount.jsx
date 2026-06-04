@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 import { db, functions } from '../../config/firebase';
 import { httpsCallable } from 'firebase/functions';
 import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import './DeleteAccount.css';
 
 const DeleteAccount = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [confirm, setConfirm] = useState(false);
   const [otp, setOtp] = useState('');
@@ -108,7 +105,7 @@ const DeleteAccount = () => {
               const snapshot = await getDocs(q);
               snapshot.forEach((document) => {
                 deletePromises.push(deleteDoc(doc(db, colName, document.id)));
-              });
+               });
             } catch (colErr) {
               console.warn(`Could not read or query collection '${colName}':`, colErr);
             }
@@ -138,10 +135,6 @@ const DeleteAccount = () => {
     <div className="delete-account-container">
       {/* Navigation Header */}
       <header className="delete-account-header">
-        <button className="back-home-btn" onClick={() => navigate('/')} aria-label="Go back to Home">
-          <FaArrowLeft className="back-icon" />
-          <span>Back to Home</span>
-        </button>
         <span className="brand-logo">M8ZEE</span>
       </header>
 
@@ -275,7 +268,7 @@ const DeleteAccount = () => {
           )}
 
           <div className="footer-notice">
-            <p>If you have any questions, please contact support at <a href="mailto:support@m8zee.com">support@m8zee.com</a>.</p>
+            <p>If you have any questions, please contact support at <a href="mailto:andym8zee@gmail.com">andym8zee@gmail.com</a>.</p>
             <p>© {new Date().getFullYear()} M8zee. All rights reserved.</p>
           </div>
         </article>

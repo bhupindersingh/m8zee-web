@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 import './ChildSafetyStandards.css';
 
 const ChildSafetyStandards = () => {
@@ -14,6 +15,10 @@ const ChildSafetyStandards = () => {
     <div className="safety-container">
       {/* Navigation Header */}
       <header className="safety-header">
+        <button className="back-home-btn" onClick={() => navigate('/')} aria-label="Go back to Home">
+          <FaArrowLeft className="back-icon" />
+          <span>Back to Home</span>
+        </button>
         <span className="brand-logo">M8ZEE</span>
       </header>
 
@@ -21,7 +26,7 @@ const ChildSafetyStandards = () => {
       <main className="safety-document">
         <article className="document-sheet">
           <h1 className="document-title">Child Safety & CSAE Prevention Standards</h1>
-          
+
           <div className="last-updated-section">
             <h2 className="updated-label">Effective Date</h2>
             <p className="updated-date">June 3, 2026</p>

@@ -18,7 +18,7 @@
   border-bottom: 1px solid #e2e8f0;
   padding: 16px 40px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -83,7 +83,8 @@
 .document-title {
   font-size: 32px;
   font-weight: 700;
-  color: #904eb1; /* Beautiful Brand Purple */
+  color: #904eb1;
+  /* Beautiful Brand Purple */
   margin: 0 0 10px 0;
   letter-spacing: -0.5px;
 }
@@ -98,7 +99,8 @@
 .updated-label {
   font-size: 14px;
   font-weight: 700;
-  color: #B775DA; /* Soft Brand Purple */
+  color: #B775DA;
+  /* Soft Brand Purple */
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin: 0;
@@ -129,7 +131,8 @@
 .section-title {
   font-size: 18px;
   font-weight: 700;
-  color: #904eb1; /* Crisp Brand Purple headings */
+  color: #904eb1;
+  /* Crisp Brand Purple headings */
   margin: 0 0 12px 0;
   letter-spacing: -0.2px;
 }
@@ -236,22 +239,22 @@
   .safety-header {
     padding: 12px 20px;
   }
-  
+
   .safety-document {
     padding: 20px 10px;
   }
-  
+
   .document-sheet {
     padding: 30px 24px;
     border-radius: 0;
     box-shadow: none;
     border: none;
   }
-  
+
   .document-title {
     font-size: 26px;
   }
-  
+
   .safety-footer {
     padding: 20px;
     flex-direction: column;
