@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Agentation } from 'agentation'
 import Home from './pages/Home/Home'
 import Quiz from './pages/Quiz/Quiz'
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
@@ -36,6 +37,7 @@ function App() {
         {/* Child Safety Standards Page */}
         <Route path="/child-safety-standards" element={<ChildSafetyStandards />} />
       </Routes>
+      {import.meta.env.DEV && <Agentation />}
     </BrowserRouter>
   )
 }

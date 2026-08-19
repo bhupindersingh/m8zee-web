@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
 import './CookiePolicy.css';
 
 const CookiePolicy = () => {
-  const navigate = useNavigate();
-
   // Scroll to top of the page on mount
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -13,15 +9,6 @@ const CookiePolicy = () => {
 
   return (
     <div className="cookies-container">
-      {/* Navigation Header */}
-      <header className="cookies-header">
-        <button className="back-home-btn" onClick={() => navigate('/')} aria-label="Go back to Home">
-          <FaArrowLeft className="back-icon" />
-          <span>Back to Home</span>
-        </button>
-        <span className="brand-logo">M8ZEE</span>
-      </header>
-
       {/* Main Document Content */}
       <main className="cookies-document">
         <article className="document-sheet">

@@ -133,11 +133,6 @@ const DeleteAccount = () => {
 
   return (
     <div className="delete-account-container">
-      {/* Navigation Header */}
-      <header className="delete-account-header">
-        <span className="brand-logo">M8ZEE</span>
-      </header>
-
       {/* Main Content */}
       <main className="delete-account-document">
         <article className="document-sheet">

@@ -16,7 +16,9 @@ function Quiz() {
   const navigate = useNavigate()
 
   // Get user info from navigation state
-  const { userName, userEmail, inviteId, userId } = location.state || {}
+  const { userName, userEmail, inviteId, userId, senderName: stateSender } = location.state || {}
+  const queryParams = new URLSearchParams(location.search)
+  const senderName = stateSender || queryParams.get('sender') || 'your friend'
 
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -124,7 +126,7 @@ function Quiz() {
   }
 
   if (showCertificate && results) {
-    return <Certificate results={results} questions={data.questions} userName={userName} />
+    return <Certificate results={results} questions={data.questions} userName={userName} senderName={senderName} />
   }
 
   if (isPreparing) {
@@ -150,7 +152,7 @@ function Quiz() {
           ) : (
             <div /> // Placeholder to keep the grid column balance
           )}
-          <div className="nav-title">Rate Yourself</div>
+          <div className="nav-title">RATE YOUR FRIENDS</div>
           <div className="nav-count">{currentIndex + 1}/9</div>
         </div>
 
@@ -172,18 +174,33 @@ function Quiz() {
         </h2>
 
         <div className="options-stack" key={currentIndex}>
-          {currentQ.answers.map((ans) => (
-            <div
-              key={ans.score}
-              className={`option-card ${answers[currentQ.id] === ans.score ? 'active' : ''}`}
-              onClick={() => handleOptionClick(ans.score)}
-            >
-              <span>{ans.text}</span>
-              <div className="circle-check">
-                {answers[currentQ.id] === ans.score && <CheckIcon />}
+          {currentQ.answers.map((ans) => {
+            const formattedText = {
+              1: "1. Still developing this",
+              2: "2. Just starting to show this",
+              3: "3. Growing in this area",
+              4: "4. Sometimes true of my friend",
+              5: "5. Quite often true of my friend",
+              6: "6. Often true of my friend",
+              7: "7. Usually true of my friend",
+              8: "8. Very true of my friend",
+              9: "9. One of their strongest qualities",
+              10: "10. This is a defining feature of my friend"
+            }[ans.score] || ans.text;
+
+            return (
+              <div
+                key={ans.score}
+                className={`option-card ${answers[currentQ.id] === ans.score ? 'active' : ''}`}
+                onClick={() => handleOptionClick(ans.score)}
+              >
+                <span>{formattedText}</span>
+                <div className="circle-check">
+                  {answers[currentQ.id] === ans.score && <CheckIcon />}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

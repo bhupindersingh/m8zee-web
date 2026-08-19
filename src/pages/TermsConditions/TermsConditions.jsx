@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import './TermsConditions.css';
 
 const TermsConditions = () => {
-  const navigate = useNavigate();
-
   // Scroll to top of the page on mount
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -13,15 +10,6 @@ const TermsConditions = () => {
 
   return (
     <div className="terms-container">
-      {/* Navigation Header */}
-      <header className="terms-header">
-        <button className="back-home-btn" onClick={() => navigate('/')} aria-label="Go back to Home">
-          <FaArrowLeft className="back-icon" />
-          <span>Back to Home</span>
-        </button>
-        <span className="brand-logo">M8ZEE</span>
-      </header>
-
       {/* Main Document Content */}
       <main className="terms-document">
         <article className="document-sheet">
@@ -156,7 +144,7 @@ const TermsConditions = () => {
           <section className="policy-section">
             <h2 className="section-title">Privacy</h2>
             <p>
-              Use of M8ZEE is also governed by the <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigate('/privacy-policy'); }}>M8ZEE Privacy Policy</a>.
+              Use of M8ZEE is also governed by the <Link to="/privacy-policy">M8ZEE Privacy Policy</Link>.
             </p>
           </section>
 

@@ -1,63 +1,30 @@
 
 function calculateResults(answers, questions) {
-  const categoryTotals = {};
-  const categoryCounts = {};
-
-  // 1. Dynamically group scores by cluster from the questions data
-  questions.forEach(q => {
-    const score = answers[q.id] || 0;
-    const category = q.cluster;
-
-    if (!categoryTotals[category]) {
-      categoryTotals[category] = 0;
-      categoryCounts[category] = 0;
-    }
-
-    categoryTotals[category] += score;
-    categoryCounts[category] += 1;
-  });
-
-  // 2. Calculate the averages
-  const scores = {};
+  // 1. Calculate total score and percentage
   let totalSum = 0;
   let totalCount = 0;
 
-  for (const category in categoryTotals) {
-    const avg = categoryTotals[category] / categoryCounts[category];
-    scores[category] = Math.round(avg * 10) / 10;
-    totalSum += categoryTotals[category];
-    totalCount += categoryCounts[category];
-  }
+  questions.forEach(q => {
+    const score = answers[q.id] || 0;
+    totalSum += score;
+    totalCount += 1;
+  });
 
   const totalPercentage = Math.round((totalSum / (totalCount * 10)) * 100);
-  console.log("Archetype Calculation - Scores:", scores);
 
-  // 3. Find the category with the highest score (winning cluster)
-  const categories = Object.keys(scores);
-  let winner = categories[0] || "";
-  let highestVal = -1;
+  // 2. Find the question with the highest score (direct 1:1 archetype mapping)
+  let topQuestion = null;
+  let maxScore = -1;
 
-  for (const category in scores) {
-    if (scores[category] > highestVal) {
-      highestVal = scores[category];
-      winner = category;
-    }
-  }
-
-  // 4. Find the highest scoring question (trait) within the winning cluster
-  const winningClusterQuestions = questions.filter(q => q.cluster === winner);
-  let topQuestion = winningClusterQuestions[0];
-  let maxQuestionScore = -1;
-
-  winningClusterQuestions.forEach(q => {
+  questions.forEach(q => {
     const score = answers[q.id] || 0;
-    if (score > maxQuestionScore) {
-      maxQuestionScore = score;
+    if (score > maxScore) {
+      maxScore = score;
       topQuestion = q;
     }
   });
 
-  // 5. Map the winning trait ID to the 9 Archetype Names
+  // 3. Map the winning question ID to the 9 Archetype Names
   const archetypeMapping = {
     q1: "The Anchor",
     q2: "The Vault",
@@ -72,11 +39,14 @@ function calculateResults(answers, questions) {
 
   const finalArchetype = topQuestion ? (archetypeMapping[topQuestion.id] || "The Anchor") : "The Anchor";
 
+  console.log("Archetype Calculation - Top question:", topQuestion?.id, "score:", maxScore, "→", finalArchetype);
+  console.log("Archetype Calculation - All answers:", answers);
+
   // Return everything to the app
   return {
-    scores: scores,
+    scores: answers,
     userScores: answers,
-    topCategory: winner,
+    topCategory: topQuestion?.id || "",
     archetype: finalArchetype,
     percentage: totalPercentage,
     totalScore: totalSum
@@ -85,4 +55,3 @@ function calculateResults(answers, questions) {
 
 // Export at the end for clean structure
 export { calculateResults };
-

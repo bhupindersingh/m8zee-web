@@ -16,16 +16,20 @@ body {
   background-color: #F8F9FA;
   font-family: 'Inter', sans-serif;
   color: var(--text-dark);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .quiz-wrapper {
-  max-width: 420px;
+  width: 100%;
+  max-width: 440px;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
 }
 
 .sticky-header {
@@ -33,19 +37,22 @@ body {
   top: 0;
   background-color: #ffffff;
   z-index: 10;
+  width: 100%;
 }
 
 /* TOP NAV */
 .top-nav {
   display: grid;
-  grid-template-columns: 60px 1fr 60px;
+  grid-template-columns: 36px 1fr 36px;
   align-items: center;
-  padding: 24px 20px;
+  padding: 16px 16px;
+  gap: 8px;
+  box-sizing: border-box;
 }
 
 .back-btn {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background: var(--gradient);
   color: white;
   border-radius: 50%;
@@ -55,25 +62,27 @@ body {
   justify-content: center;
   cursor: pointer;
   box-shadow: var(--shadow);
-  font-size: 28px;
-  /* Bigger arrow icon size */
+  font-size: 18px;
+  flex-shrink: 0;
 }
 
 .nav-title {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
-  font-size: 32px;
-  line-height: 46px;
+  font-size: clamp(20px, 5.2vw, 26px);
+  line-height: 1.2;
   text-transform: uppercase;
   text-align: center;
   color: #000000;
+  white-space: nowrap;
 }
 
 .nav-count {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-grey);
   font-weight: 600;
   text-align: right;
+  flex-shrink: 0;
 }
 
 /* PROGRESS BAR */
@@ -81,7 +90,6 @@ body {
   width: 100%;
   height: 6px;
   background-color: #F3F4F6;
-
 }
 
 .progress-bar-fill {
@@ -93,22 +101,26 @@ body {
 
 /* CONTENT */
 .content {
-  padding: 40px 24px;
+  padding: 28px 18px 40px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .trait-tag {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background-color: rgba(183, 117, 218, 0.1);
-  color: var(--primary);
-  padding: 0px 12px;
-  height: 24px;
-  border: 1px solid #E5E7EB;
-  border-radius: 9999px;
-  font-size: 11px;
+  gap: 7px;
+  background-color: #f3e8ff;
+  color: #7c3aed;
+  padding: 4px 14px;
+  height: auto;
+  border: 1px solid #ddd6fe;
+  border-radius: 16px;
+  font-size: 12.5px;
   font-weight: 700;
-
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
 .question-heading {
@@ -392,7 +404,7 @@ body {
 .cert-archetype-title {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
-  font-size: 40px;
+  font-size: clamp(28px, 7.8vw, 40px);
   background: linear-gradient(135deg, #B775DA 0%, #904eb1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -529,57 +541,393 @@ body {
   margin-left: 8px;
 }
 
-.interactive-card-btn {
+/* ==========================================================================
+   FINAL SCREEN / CERTIFICATE OVERHAUL STYLES
+   ========================================================================== */
+
+.final-screen-wrapper {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+/* Header */
+.final-brand-header {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  border: 1.5px solid var(--primary);
-  border-radius: 14px;
-  padding: 16px 20px;
+  justify-content: center;
+  padding: 24px 20px 16px;
+  background-color: #ffffff;
+}
+
+.final-brand-logo {
+  width: 132px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 9px;
+}
+
+.final-brand-tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #111827;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.final-brand-tagline .tagline-purple {
+  color: #7c3aed;
+  font-weight: 800;
+}
+
+.final-top-border {
+  width: 100%;
+  height: 1.5px;
+  background-color: #ddd6fe;
+}
+
+.final-screen-content {
+  padding: 24px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   box-sizing: border-box;
-  background-color: #ffffff;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-bottom: 16px;
-  outline: none;
 }
 
-.interactive-card-btn:active {
-  transform: translateY(0);
-  background-color: #FAF5FF;
-}
-
-.interactive-card-btn .btn-logo {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
-
-.interactive-card-btn .btn-divider {
-  width: 1px;
-  height: 28px;
-  background-color: var(--primary);
-  margin: 0 16px;
-}
-
-.interactive-card-btn .btn-text {
-  flex: 1;
-  text-align: left;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  line-height: 1.4;
-  color: #4B5563;
-}
-
-.interactive-card-btn .btn-text .btn-text-bottom {
+/* "THANKS - YOU'RE DONE! 💜" */
+.final-done-heading {
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
   font-weight: 700;
-  color: #B775DA;
+  text-transform: uppercase;
+  text-align: center;
+  color: #111827;
+  letter-spacing: 0.5px;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.purple-heart-emoji {
+  font-size: 24px;
+  display: inline-block;
+}
+
+/* Checkmark Badge */
+.done-badge-wrapper {
+  margin: 4px 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Anonymous Notice */
+.final-anonymous-block {
+  text-align: center;
+  margin-bottom: 24px;
+  max-width: 360px;
+}
+
+.final-anonymous-main {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #6d28d9;
+  margin: 0 0 12px 0;
+}
+
+.final-anonymous-main strong {
+  color: #5b21b6;
+  font-weight: 800;
+}
+
+.final-anonymous-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* Heart Divider */
+.final-heart-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.final-divider-line {
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.final-heart-icon {
+  flex-shrink: 0;
+}
+
+/* Promo Card */
+.final-promo-card {
+  width: 100%;
+  background-color: #f3e8ff;
+  border: 1.5px solid #ddd6fe;
+  border-radius: 24px;
+  padding: 28px 20px 22px;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
+}
+
+.promo-card-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #111827;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+}
+
+.promo-card-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4b5563;
+  margin: 0 0 24px 0;
+}
+
+.promo-purple-text {
+  color: #7c3aed;
+  font-weight: 700;
+}
+
+/* 3 Feature Icons */
+.promo-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+  align-items: start;
+}
+
+.promo-feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.promo-icon-circle {
+  width: 52px;
+  height: 52px;
+  background: #ffffff;
+  border: 1.5px solid #f3e8ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.06);
+}
+
+.promo-feature-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #374151;
+}
+
+/* Solid Purple CTA & Download Buttons */
+.final-cta-pill-btn,
+.final-download-bar-btn {
+  width: 100%;
+  height: 52px;
+  background: #7c3aed;
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
+  transition: all 0.2s ease;
+}
+
+.final-cta-pill-btn {
+  margin-bottom: 8px;
+}
+
+.final-download-bar-btn {
+  margin-top: 14px;
+}
+
+.final-cta-pill-btn:hover,
+.final-download-bar-btn:hover {
+  background: #6d28d9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35);
+}
+
+.final-cta-pill-btn:active,
+.final-download-bar-btn:active {
+  transform: translateY(0);
+}
+
+.final-arrow-icon {
   font-size: 14px;
 }
 
-.interactive-card-btn .btn-chevron-img {
-  width: 10px;
-  height: 16px;
+.promo-free-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px;
+  color: #6b7280;
+  margin: 6px 0 0 0;
+}
+
+/* Certificate Download Section */
+.final-cert-wrapper {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.cert-header-official-logo {
+  width: 80px;
+  height: auto;
   object-fit: contain;
-  margin-left: 8px;
+}
+
+/* Get m8zee Store Badges */
+.final-get-app-section {
+  text-align: center;
+  width: 100%;
+  margin: 4px 0 12px;
+}
+
+.get-app-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.get-app-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 16px 0;
+}
+
+.get-app-badges-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.store-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #000000;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-decoration: none;
+  min-width: 140px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.store-pill-icon {
+  font-size: 22px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.store-pill-btn:hover {
+  transform: translateY(-1px);
+}
+
+.store-pill-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.store-pill-sub {
+  font-size: 9px;
+  font-weight: 500;
+  color: #e5e7eb;
+  line-height: 1;
+}
+
+.store-pill-main {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+/* Final Footer */
+.final-footer {
+  width: 100%;
+  background: #fdfafd;
+  border-top: 1px solid #f3e8ff;
+  border-radius: 36px 36px 0 0;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  margin-top: 32px;
+}
+
+.final-footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.final-footer-logo {
+  width: 90px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+
+.final-footer-tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #374151;
+  text-transform: uppercase;
+}
+
+.final-footer-tagline .tagline-purple {
+  color: #7c3aed;
+  font-weight: 800;
 }

@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
 import './ChildSafetyStandards.css';
 
 const ChildSafetyStandards = () => {
-  const navigate = useNavigate();
-
   // Scroll to top of the page on mount
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -13,15 +9,6 @@ const ChildSafetyStandards = () => {
 
   return (
     <div className="safety-container">
-      {/* Navigation Header */}
-      <header className="safety-header">
-        <button className="back-home-btn" onClick={() => navigate('/')} aria-label="Go back to Home">
-          <FaArrowLeft className="back-icon" />
-          <span>Back to Home</span>
-        </button>
-        <span className="brand-logo">M8ZEE</span>
-      </header>
-
       {/* Main Document Content */}
       <main className="safety-document">
         <article className="document-sheet">
