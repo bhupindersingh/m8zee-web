@@ -153,19 +153,16 @@ function Quiz() {
   const currentQ = data.questions[currentIndex]
   const progressWidth = ((currentIndex + 1) / 9) * 100
 
-  const displayName = senderName && senderName.toLowerCase() !== 'your friend' ? senderName : 'your friend';
-  const capitalizedDisplayName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
-
   const clientQuestions = {
-    q1: `${capitalizedDisplayName} stands by their friends and offers encouragement through both highs and lows.`,
-    q2: `${capitalizedDisplayName} makes people feel safe sharing things with them.`,
-    q3: `${capitalizedDisplayName} is honest in a way that strengthens the friendship.`,
-    q4: `${capitalizedDisplayName} gives their full attention and tries to truly understand.`,
-    q5: `${capitalizedDisplayName} notices and cares about how their friends are feeling.`,
-    q6: `${capitalizedDisplayName} respects their friends’ choices, values and personal space.`,
-    q7: `${capitalizedDisplayName} makes their friends feel accepted as they are.`,
-    q8: `${capitalizedDisplayName} shows up when it matters and follows through on what they say.`,
-    q9: `${capitalizedDisplayName} brings enjoyment, lightness or warmth into the friendship.`
+    q1: "Your friend stands by their friends and offers encouragement through both highs and lows.",
+    q2: "Your friend makes people feel safe sharing things with them.",
+    q3: "Your friend is honest in a way that strengthens the friendship.",
+    q4: "Your friend gives their full attention and tries to truly understand.",
+    q5: "Your friend notices and cares about how their friends are feeling.",
+    q6: "Your friend respects their friends’ choices, values and personal space.",
+    q7: "Your friend makes their friends feel accepted as they are.",
+    q8: "Your friend shows up when it matters and follows through on what they say.",
+    q9: "Your friend brings enjoyment, lightness or warmth into the friendship."
   };
 
   const clientTitles = {
@@ -214,7 +211,7 @@ function Quiz() {
             </button>
           )}
           <div className="nav-title">
-            HOW DO YOU SEE <span className="highlight-purple-text">{displayName.toUpperCase()}</span>?
+            HOW DO YOU SEE <span className="highlight-purple-text">YOUR FRIEND</span>?
           </div>
           <div className="nav-count">{currentIndex + 1}/9</div>
         </div>
@@ -239,7 +236,7 @@ function Quiz() {
         </h2>
 
         <p className="question-subtext">
-          How much does this sound like {displayName}?
+          How much does this sound like your friend?
         </p>
 
         <div className="options-stack" key={currentIndex}>
