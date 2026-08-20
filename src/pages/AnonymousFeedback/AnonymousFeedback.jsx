@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './AnonymousFeedback.css';
 
 const AnonymousFeedback = () => {
@@ -108,7 +109,7 @@ const AnonymousFeedback = () => {
           <section className="policy-section">
             <h2 className="section-title">Participant Privacy</h2>
             <p>
-              Information provided by participants may be processed in accordance with the <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigate('/privacy-policy'); }}>M8ZEE Privacy Policy</a>. Individual responses are protected and are not intended to be disclosed to the report recipient.
+              Information provided by participants may be processed in accordance with the <Link to="/privacy-policy">M8ZEE Privacy Policy</Link>. Individual responses are protected and are not intended to be disclosed to the report recipient.
             </p>
           </section>
 

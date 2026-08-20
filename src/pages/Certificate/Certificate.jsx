@@ -1,5 +1,3 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FaApple, FaGooglePlay, FaArrowRight } from 'react-icons/fa';
 // Commented out unused imports for certificate preview
 // import AnchorIcon from '../../assets/icons/01_The_Anchor.png';
@@ -259,17 +257,6 @@ const DoneCheckBadge = () => (
   </div>
 );
 
-// Heart Divider Line
-const HeartDivider = () => (
-  <div className="final-heart-divider">
-    <div className="final-divider-line" />
-    <svg width="15" height="14" viewBox="0 0 24 22" fill="#7C3AED" className="final-heart-icon">
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-    </svg>
-    <div className="final-divider-line" />
-  </div>
-);
-
 // Feature Icons
 const ClockIcon = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -329,22 +316,7 @@ const GooglePlayBadge = () => (
   </a>
 );
 
-// Final Curved Brand Footer
-const FinalFooter = () => (
-  <footer className="final-footer">
-    <div className="final-footer-inner">
-      <img src={OfficialLogo} alt="m8zee" className="final-footer-logo" />
-      <div className="final-footer-tagline">
-        <span>SEE YOURSELF. </span>
-        <span className="tagline-purple">GROW </span>
-        <span>YOUR FRIENDSHIPS.</span>
-      </div>
-    </div>
-  </footer>
-);
-
-const Certificate = ({ results, questions, userName, senderName = 'your friend' }) => {
-  const navigate = useNavigate();
+const Certificate = ({ senderName = 'your friend' }) => {
   const displaySender = senderName === 'your friend' ? 'your friend' : senderName;
 
   /* ==========================================================================
