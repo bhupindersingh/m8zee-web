@@ -382,21 +382,12 @@ const Certificate = ({ results, questions, userName, senderName = 'your friend' 
 
   const handleDiscoverClick = () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-    const isAndroid = /android/i.test(userAgent);
+    const isIOS = /iPad|iPhone|iPod|Macintosh/.test(userAgent) && !window.MSStream;
 
     if (isIOS) {
       window.open('https://apps.apple.com/app/m8zee/id6739818817', '_blank', 'noopener,noreferrer');
-    } else if (isAndroid) {
-      window.open('https://play.google.com/store/apps/details?id=com.m8zee', '_blank', 'noopener,noreferrer');
     } else {
-      // Desktop: smooth scroll down to the store download options
-      const storeSection = document.getElementById('get-app-section');
-      if (storeSection) {
-        storeSection.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        window.open('https://play.google.com/store/apps/details?id=com.m8zee', '_blank', 'noopener,noreferrer');
-      }
+      window.open('https://play.google.com/store/apps/details?id=com.m8zee', '_blank', 'noopener,noreferrer');
     }
   };
 
