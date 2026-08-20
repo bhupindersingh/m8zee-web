@@ -15,10 +15,10 @@ const PreparingCertificate = () => {
         <div className="prep-ring-container">
           <div className="loading-ring"></div>
           <div className="prep-text">
-            Your Certificate is being prepared...
+            Submitting your answers anonymously...
           </div>
           <div className="sub-prep-text">
-            Analyzing Your Responses
+            Adding feedback to your friend's profile
           </div>
         </div>
         <img src={ExcitedIcon} alt="Excited" className="excited-image" />

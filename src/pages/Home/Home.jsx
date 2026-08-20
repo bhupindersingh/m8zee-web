@@ -79,25 +79,36 @@ const Home = () => {
     if (name && email) {
       setLoading(true);
       try {
-        // 5. Check if user already participated
-        const q = query(
-          collection(db, "friend_ratings"), 
-          where("friendEmail", "==", email.toLowerCase().trim())
-        );
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error("Connection timeout. Please check your internet or Firebase config.")), 5000)
-        );
-        const querySnapshot = await Promise.race([getDocs(q), timeoutPromise]);
-        if (!querySnapshot.empty) {
-          alert("You have already participated in this quiz with this email!");
-          setLoading(false);
-          return;
+        const inviteId = searchParams.get('inviteId') || '';
+        const userId = searchParams.get('userId') || '';
+
+        // 5. Check if user already participated for this specific invite / friend
+        if (inviteId || userId) {
+          const conditions = [where("friendEmail", "==", email.toLowerCase().trim())];
+          if (inviteId) {
+            conditions.push(where("inviteId", "==", inviteId));
+          } else if (userId) {
+            conditions.push(where("userId", "==", userId));
+          }
+
+          const q = query(collection(db, "friend_ratings"), ...conditions);
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error("Connection timeout. Please check your internet or Firebase config.")), 5000)
+          );
+          
+          try {
+            const querySnapshot = await Promise.race([getDocs(q), timeoutPromise]);
+            if (!querySnapshot.empty) {
+              alert("You have already participated in this quiz for this friend!");
+              setLoading(false);
+              return;
+            }
+          } catch (queryErr) {
+            console.warn("Participation check warning:", queryErr);
+          }
         }
 
         // 6. Navigate to the quiz page, passing the user info and inviteId
-        const inviteId = searchParams.get('inviteId') || '';
-        const userId = searchParams.get('userId') || '';
-        
         navigate('/quiz', { 
           state: { 
             userName: name, 
@@ -133,9 +144,9 @@ const Home = () => {
         {/* Main Hero Section */}
         <div className="hero-section">
           <h1 className="home-hero-title">
-            How do you{' '}
+            How do you see{' '}
             <span className="highlight-purple">
-              {rawSender ? rawSender : 'see your friend?'}
+              {rawSender ? `${rawSender}?` : 'your friend?'}
               <svg className="hero-underline-curve" viewBox="0 0 260 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M 2 16 C 80 3.5 175 3 258 11.5 C 175 7.5 80 9 2 16 Z"
@@ -153,7 +164,7 @@ const Home = () => {
           </h1>
 
           <p className="hero-lead">
-            They’ve asked you because they value your perspective.
+            {rawSender ? `${rawSender} has asked you because they value your perspective.` : 'They’ve asked you because they value your perspective.'}
           </p>
 
           <p className="hero-description">

@@ -7,9 +7,22 @@ import ArrowLeftLineIcon from '@rsuite/icons/ArrowLeftLine'
 import { CheckIcon } from '../../assets/icons/CheckIcon'
 import { HeartIcon } from '../../assets/icons/HeartIcon'
 import { calculateResults } from '../../utils/scoring'
+import OfficialLogo from '../../assets/icons/m8zee_logo_official.png'
 import Certificate from '../Certificate/Certificate'
 import PreparingCertificate from '../../components/PreparingCertificate'
 import '../../App.css'
+
+// Top Brand Header
+const BrandHeader = () => (
+  <div className="final-brand-header">
+    <img src={OfficialLogo} alt="m8zee" className="final-brand-logo" />
+    <div className="final-brand-tagline">
+      <span>SEE YOURSELF. </span>
+      <span className="tagline-purple">GROW </span>
+      <span>YOUR FRIENDSHIPS.</span>
+    </div>
+  </div>
+);
 
 function Quiz() {
   const location = useLocation()
@@ -109,10 +122,12 @@ function Quiz() {
           // but in a production app, you might want to handle this differently.
         }
 
+        // Quick 1-second subtle submission transition
+        setIsPreparing(true)
         setTimeout(() => {
           setShowCertificate(true)
           setIsPreparing(false)
-        }, 3000)
+        }, 1000)
       }
     }, 300)
   }
@@ -138,69 +153,126 @@ function Quiz() {
   const currentQ = data.questions[currentIndex]
   const progressWidth = ((currentIndex + 1) / 9) * 100
 
+  const displayName = senderName && senderName.toLowerCase() !== 'your friend' ? senderName : 'your friend';
+  const capitalizedDisplayName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+
+  const clientQuestions = {
+    q1: `${capitalizedDisplayName} stands by their friends and offers encouragement through both highs and lows.`,
+    q2: `${capitalizedDisplayName} makes people feel safe sharing things with them.`,
+    q3: `${capitalizedDisplayName} is honest in a way that strengthens the friendship.`,
+    q4: `${capitalizedDisplayName} gives their full attention and tries to truly understand.`,
+    q5: `${capitalizedDisplayName} notices and cares about how their friends are feeling.`,
+    q6: `${capitalizedDisplayName} respects their friends’ choices, values and personal space.`,
+    q7: `${capitalizedDisplayName} makes their friends feel accepted as they are.`,
+    q8: `${capitalizedDisplayName} shows up when it matters and follows through on what they say.`,
+    q9: `${capitalizedDisplayName} brings enjoyment, lightness or warmth into the friendship.`
+  };
+
+  const clientTitles = {
+    q1: "Steady Support",
+    q2: "Trustworthy",
+    q3: "Kindly Honest",
+    q4: "Present Listener",
+    q5: "Emotionally Aware",
+    q6: "Respects Boundaries",
+    q7: "Accepting",
+    q8: "Shows Up",
+    q9: "Positive Energy"
+  };
+
+  const shortOptions = {
+    1: "Not at all",
+    2: "Very rarely",
+    3: "Rarely",
+    4: "Sometimes",
+    5: "Quite often",
+    6: "Usually",
+    7: "Very often",
+    8: "Almost always",
+    9: "Consistently",
+    10: "Absolutely"
+  };
+
+  const questionTitle = clientTitles[currentQ.id] || currentQ.title;
+  const questionText = clientQuestions[currentQ.id] || currentQ.question;
+
   return (
     <div className="quiz-wrapper">
+      {/* 1. Brand Logo & Tagline Header */}
+      <BrandHeader />
+      <div className="final-top-border" />
+
       <div className="sticky-header">
         <div className="top-nav">
-          {currentIndex > 0 ? (
+          {currentIndex > 0 && (
             <button
               className="back-btn"
               onClick={() => setCurrentIndex(currentIndex - 1)}
+              aria-label="Previous question"
             >
               <ArrowLeftLineIcon />
             </button>
-          ) : (
-            <div /> // Placeholder to keep the grid column balance
           )}
-          <div className="nav-title">RATE YOUR FRIENDS</div>
+          <div className="nav-title">
+            HOW DO YOU SEE <span className="highlight-purple-text">{displayName.toUpperCase()}</span>?
+          </div>
           <div className="nav-count">{currentIndex + 1}/9</div>
         </div>
 
-        <div className="progress-bar-container">
-          <div
-            className="progress-bar-fill"
-            style={{ width: `${progressWidth}%` }}
-          ></div>
+        <div className="progress-bar-wrapper">
+          <div className="progress-bar-container">
+            <div
+              className="progress-bar-fill"
+              style={{ width: `${progressWidth}%` }}
+            ></div>
+          </div>
         </div>
       </div>
 
       <div className="content">
         <div className="trait-tag">
-          <HeartIcon /> {currentQ.title}
+          <HeartIcon /> {questionTitle}
         </div>
 
         <h2 className="question-heading">
-          “{currentQ.question}”
+          “{questionText}”
         </h2>
 
-        <div className="options-stack" key={currentIndex}>
-          {currentQ.answers.map((ans) => {
-            const formattedText = {
-              1: "1. Still developing this",
-              2: "2. Just starting to show this",
-              3: "3. Growing in this area",
-              4: "4. Sometimes true of my friend",
-              5: "5. Quite often true of my friend",
-              6: "6. Often true of my friend",
-              7: "7. Usually true of my friend",
-              8: "8. Very true of my friend",
-              9: "9. One of their strongest qualities",
-              10: "10. This is a defining feature of my friend"
-            }[ans.score] || ans.text;
+        <p className="question-subtext">
+          How much does this sound like {displayName}?
+        </p>
 
-            return (
-              <div
-                key={ans.score}
-                className={`option-card ${answers[currentQ.id] === ans.score ? 'active' : ''}`}
-                onClick={() => handleOptionClick(ans.score)}
-              >
-                <span>{formattedText}</span>
-                <div className="circle-check">
-                  {answers[currentQ.id] === ans.score && <CheckIcon />}
-                </div>
+        <div className="options-stack" key={currentIndex}>
+          {currentQ.answers.map((ans) => (
+            <div
+              key={ans.score}
+              className={`option-card ${answers[currentQ.id] === ans.score ? 'active' : ''}`}
+              onClick={() => handleOptionClick(ans.score)}
+            >
+              <div className="option-label-wrapper">
+                <span className="option-number">{ans.score}.</span>
+                <span className="option-text">{shortOptions[ans.score] || ans.text}</span>
               </div>
-            );
-          })}
+              <div className="circle-check">
+                {answers[currentQ.id] === ans.score && <CheckIcon />}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 3. Anonymous Guarantee Footer Card */}
+        <div className="quiz-anonymous-footer">
+          <div className="quiz-lock-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="10" width="14" height="11" rx="3" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M8 10V6.5C8 4.567 9.567 3 11.5 3H12.5C14.433 3 16 4.567 16 6.5V10" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="12" cy="14.5" r="1.2" fill="#FFFFFF" />
+              <path d="M12 15.7V18" stroke="#FFFFFF" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </div>
+          <div className="quiz-anonymous-text">
+            Your answer is anonymous.
+          </div>
         </div>
       </div>
     </div>
