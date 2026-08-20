@@ -36,14 +36,43 @@ function Quiz() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [isPreparing, setIsPreparing] = useState(false)
-  const [showCertificate, setShowCertificate] = useState(false)
-  const [results, setResults] = useState(null)
+  const [showCertificate, setShowCertificate] = useState(() => {
+    try {
+      return !!sessionStorage.getItem('m8zee_quiz_completed');
+    } catch {
+      return false;
+    }
+  })
+  const [results, setResults] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('m8zee_quiz_completed');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return parsed?.results || null;
+      }
+    } catch {
+      return null;
+    }
+    return null;
+  })
+  const [savedSession, setSavedSession] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('m8zee_quiz_completed');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch {
+      return null;
+    }
+    return null;
+  })
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState({})
 
-  // Security check: Redirect if no email (user skipped home page)
+  // Security check: Redirect if no email (user skipped home page) and not already completed
   useEffect(() => {
-    if (!userEmail) {
+    const isCompleted = sessionStorage.getItem('m8zee_quiz_completed');
+    if (!userEmail && !isCompleted) {
       // Preserve the URL params (inviteId, userId) when redirecting to Home
       navigate('/' + location.search)
     }
@@ -100,6 +129,19 @@ function Quiz() {
         const res = calculateResults(updatedAnswers, data.questions)
         setResults(res)
 
+        // Save completion session so refresh stays on Done screen
+        try {
+          const sessionPayload = {
+            results: res,
+            userName: userName || '',
+            senderName: senderName || 'your friend'
+          };
+          sessionStorage.setItem('m8zee_quiz_completed', JSON.stringify(sessionPayload));
+          setSavedSession(sessionPayload);
+        } catch (e) {
+          console.warn("Could not save completion state:", e);
+        }
+
         try {
           // 7. Save to friend_ratings (The Lock)
           await addDoc(collection(db, "friend_ratings"), {
@@ -132,16 +174,18 @@ function Quiz() {
     }, 300)
   }
 
+  if (showCertificate && results) {
+    const effectiveUserName = userName || savedSession?.userName || '';
+    const effectiveSender = senderName !== 'your friend' ? senderName : (savedSession?.senderName || 'your friend');
+    return <Certificate results={results} questions={data?.questions || []} userName={effectiveUserName} senderName={effectiveSender} />
+  }
+
   if (loading) {
     return (
       <div className="quiz-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <PropagateLoader color="#aa3bff" size={12} />
       </div>
     )
-  }
-
-  if (showCertificate && results) {
-    return <Certificate results={results} questions={data.questions} userName={userName} senderName={senderName} />
   }
 
   if (isPreparing) {

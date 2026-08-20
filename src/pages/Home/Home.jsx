@@ -108,6 +108,13 @@ const Home = () => {
           }
         }
 
+        // Clear any previous completion session for a fresh quiz attempt
+        try {
+          sessionStorage.removeItem('m8zee_quiz_completed');
+        } catch (e) {
+          console.warn("Could not clear session:", e);
+        }
+
         // 6. Navigate to the quiz page, passing the user info and inviteId
         navigate('/quiz', { 
           state: { 
