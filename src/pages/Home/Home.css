@@ -65,18 +65,17 @@
   color: #7c3aed;
   position: relative;
   display: inline-block;
-  overflow: hidden;
-  padding-bottom: 6px;
+  vertical-align: baseline;
 }
 
 .hero-underline-curve {
   position: absolute;
-  left: -6px;
-  bottom: -4px;
-  width: calc(100% + 14px);
-  height: 14px;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 12px;
   pointer-events: none;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero-lead {
