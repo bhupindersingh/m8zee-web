@@ -76,6 +76,11 @@ const Home = () => {
   const handleStart = async (e) => {
     e.preventDefault();
     
+    // Dismiss mobile virtual keyboard immediately on form submission
+    if (document.activeElement && typeof document.activeElement.blur === 'function') {
+      document.activeElement.blur();
+    }
+    
     if (name && email) {
       setLoading(true);
       try {

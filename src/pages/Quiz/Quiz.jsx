@@ -69,6 +69,13 @@ function Quiz() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState({})
 
+  // Reset scroll and visual viewport offset on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (document.body) document.body.scrollTop = 0;
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+  }, [])
+
   // Security check: Redirect if no email (user skipped home page) and not already completed
   useEffect(() => {
     const isCompleted = sessionStorage.getItem('m8zee_quiz_completed');
