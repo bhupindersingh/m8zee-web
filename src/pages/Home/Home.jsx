@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaArrowRight } from 'react-icons/fa';
 import { db } from '../../config/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 import m8zeeLogo from '../../assets/icons/m8zee_logo_official.png';
 import './Home.css';
 
@@ -72,6 +72,65 @@ const Home = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // 3b. Track "link_opened" when a user lands with invite params
+  const hasTrackedOpen = useRef(false);
+
+  useEffect(() => {
+    const inviteId = searchParams.get('inviteId') || '';
+    const userId = searchParams.get('userId') || '';
+
+    // Only track if valid invite params exist
+    if (!inviteId && !userId) return;
+
+    // In-memory guard to block React StrictMode / fast re-renders
+    if (hasTrackedOpen.current) return;
+
+    // Session guard to block duplicate tracking on refresh
+    const sessionKey = `m8zee_tracked_open_${inviteId || userId}`;
+    try {
+      if (sessionStorage.getItem(sessionKey)) return;
+    } catch {
+      // Ignore sessionStorage errors (e.g. strict privacy mode)
+    }
+
+    // 1. Mark both memory and session storage IMMEDIATELY (synchronously)
+    hasTrackedOpen.current = true;
+    try {
+      sessionStorage.setItem(sessionKey, 'true');
+    } catch {
+      // Ignore storage errors
+    }
+
+    const logLinkOpened = async () => {
+      try {
+        await addDoc(collection(db, "invite_tracking"), {
+          inviteId,
+          userId,
+          event: "link_opened",
+          senderName: senderName || searchParams.get('sender') || '',
+          metadata: {
+            userAgent: navigator.userAgent || '',
+            referrer: document.referrer || '',
+            timestamp: new Date().toISOString()
+          },
+          createdAt: serverTimestamp()
+        });
+      } catch (err) {
+        // Non-blocking: tracking failures must never break user experience
+        console.warn("Could not log link_opened event:", err);
+        // Rollback guards if network write failed
+        hasTrackedOpen.current = false;
+        try {
+          sessionStorage.removeItem(sessionKey);
+        } catch {
+          // Ignore
+        }
+      }
+    };
+
+    logLinkOpened();
+  }, [searchParams, senderName]);
+
   // 4. Function to handle the "Start Quiz" button
   const handleStart = async (e) => {
     e.preventDefault();
@@ -120,7 +179,47 @@ const Home = () => {
           console.warn("Could not clear session:", e);
         }
 
-        // 6. Navigate to the quiz page, passing the user info and inviteId
+        // 6. Track "form_started" event (friend entered details and proceeded to quiz)
+        if (inviteId || userId) {
+          const formStartedKey = `m8zee_tracked_form_${inviteId || userId}_${email.toLowerCase().trim()}`;
+          let alreadyTracked = false;
+          try {
+            alreadyTracked = !!sessionStorage.getItem(formStartedKey);
+          } catch {
+            alreadyTracked = false;
+          }
+
+          if (!alreadyTracked) {
+            // Mark synchronously before async network call
+            try {
+              sessionStorage.setItem(formStartedKey, 'true');
+            } catch {
+              // Ignore storage errors
+            }
+
+            try {
+              await addDoc(collection(db, "invite_tracking"), {
+                inviteId,
+                userId,
+                event: "form_started",
+                senderName: senderName || searchParams.get('sender') || '',
+                friendName: name.trim(),
+                friendEmail: email.toLowerCase().trim(),
+                createdAt: serverTimestamp()
+              });
+            } catch (trackErr) {
+              console.warn("Could not log form_started event:", trackErr);
+              // Rollback if network write failed
+              try {
+                sessionStorage.removeItem(formStartedKey);
+              } catch {
+                // Ignore
+              }
+            }
+          }
+        }
+
+        // 7. Navigate to the quiz page, passing the user info and inviteId
         navigate('/quiz', { 
           state: { 
             userName: name, 
